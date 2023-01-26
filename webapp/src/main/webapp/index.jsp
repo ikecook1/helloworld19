@@ -1,20 +1,15 @@
 <html>
 <head>
-  <title>Book Query</title>
+  <title>Order Book</title>
 </head>
+ 
 <body>
   <h1>Another E-Bookstore</h1>
-  <h3>Choose Author(s):</h3>
-  <form method="get">
-    <input type="checkbox" name="author" value="Tan Ah Teck">Tan
-    <input type="checkbox" name="author" value="Mohd Ali">Ali
-    <input type="checkbox" name="author" value="Kumar">Kumar
-    <input type="submit" value="Query">
-  </form>
+  <h2>Thank you for ordering...</h2>
  
   <%
-    String[] authors = request.getParameterValues("author");
-    if (authors != null) {
+    String[] ids = request.getParameterValues("id");
+    if (ids != null) {
   %>
   <%@ page import = "java.sql.*" %>
   <%
@@ -23,53 +18,41 @@
       // Connection conn =
       //    DriverManager.getConnection("jdbc:odbc:eshopODBC");  // Access
       Statement stmt = conn.createStatement();
- 
-      String sqlStr = "SELECT * FROM books WHERE author IN (";
-      sqlStr += "'" + authors[0] + "'";  // First author
-      for (int i = 1; i < authors.length; ++i) {
-         sqlStr += ", '" + authors[i] + "'";  // Subsequent authors need a leading commas
-      }
-      sqlStr += ") AND qty > 0 ORDER BY author ASC, title ASC";
- 
-      // for debugging
-      System.out.println("Query statement is " + sqlStr);
-      ResultSet rset = stmt.executeQuery(sqlStr);
+      String sqlStr;
+      int recordUpdated;
+      ResultSet rset;
   %>
-      <hr>
-      <form method="get" action="order.jsp">
-        <table border=1 cellpadding=5>
-          <tr>
-            <th>Order</th>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Price</th>
-            <th>Qty</th>
-          </tr>
+      <table border=1 cellpadding=3 cellspacing=0>
+        <tr>
+          <th>Author</th>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Qty In Stock</th>
+        </tr>
   <%
-      while (rset.next()) {
-        int id = rset.getInt("id");
+      for (int i = 0; i < ids.length; ++i) {
+        // Subtract the QtyAvailable by one
+        sqlStr = "UPDATE books SET qty = qty - 1 WHERE id = " + ids[i];
+        recordUpdated = stmt.executeUpdate(sqlStr);
+        // carry out a query to confirm
+        sqlStr = "SELECT * FROM books WHERE id =" + ids[i];
+        rset = stmt.executeQuery(sqlStr);
+        while (rset.next()) {
   %>
           <tr>
-            <td><input type="checkbox" name="id" value="<%= id %>"></td>
             <td><%= rset.getString("author") %></td>
             <td><%= rset.getString("title") %></td>
             <td>$<%= rset.getInt("price") %></td>
             <td><%= rset.getInt("qty") %></td>
           </tr>
-  <%
+  <%    }
+        rset.close();
       }
-  %>
-        </table>
-        <br>
-        <input type="submit" value="Order">
-        <input type="reset" value="Clear">
-      </form>
-      <a href="<%= request.getRequestURI() %>"><h3>Back</h3></a>
-  <%
-      rset.close();
       stmt.close();
       conn.close();
     }
   %>
+  </table>
+  <a href="query.jsp"><h3>BACK</h3></a>
 </body>
 </html>
