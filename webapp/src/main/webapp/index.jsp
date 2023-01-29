@@ -97,16 +97,16 @@ http://www.tooplate.com/view/2032-gray-box
 						
 						<li><a href="about.html">About Us<span></span></a>
 							<ul>
-								<li><a href="#">Sub menu 1</a></li>
-								<li><a href="#">Sub menu 2</a></li>
+								<li><a href="#">FAFA 1</a></li>
+								<li><a href="#">FAFA 2</a></li>
 								<li><a href="#">Sub menu 3</a></li>
 						  </ul>
 						</li>
 						
 						<li><a href="portfolio.html" class="selected">Portfolio<span></span></a>
 							<ul>
-								<li><a href="#">Sub menu 1</a></li>
-								<li><a href="#">Sub menu 2</a></li>
+								<li><a href="#">FAFA 1</a></li>
+								<li><a href="#">FAFA 2</a></li>
 								<li><a href="#">Sub menu 3</a></li>
 								<li><a href="#">Sub menu 4</a></li>
 								<li><a href="#">Sub menu 5</a></li>
