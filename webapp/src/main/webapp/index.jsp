@@ -1,5 +1,5 @@
 
 
-<h1> Welcome to Avery's Restaurant page /<h1> 
+<h1> Welcome to Avery's Technology page /<h1> 
 
-<h1> We sell Jollor Rice and fufu  here /<h1>
+<h1> We sell computers and printer  here /<h1>
